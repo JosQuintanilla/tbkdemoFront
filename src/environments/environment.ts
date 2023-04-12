@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  APIEndpoint: "apitbk/",//"http://localhost:9090/apitbk",
+  APIEndpoint: "http://localhost:9090/apitbk",
+  APIEndpointProxy: "apitbk/",//"http://localhost:9090/apitbk",
   production: false
 };
 

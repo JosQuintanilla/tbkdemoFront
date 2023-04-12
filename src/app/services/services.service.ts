@@ -16,10 +16,23 @@ export class ServicesService {
     return this.apiConnect.request('GET','version', this.options);
   }
 
-  listaRolesPorAcciones (idRol: number){
+
+  login(usuario: string, password: string){
     this.options = {
-       idRol: idRol
+      usuario: usuario,
+      password: password
     }
-    return this.apiConnect.request('GET','listaRolesPorAcciones', this.options);
-}
+    return this.apiConnect.request('POST','login', this.options);
+  }
+
+  agregarUsuario(){
+    this.options = {}
+    return this.apiConnect.request('POST','agregarUsuario', this.options);
+  }
+
+  listaUsuarios(){
+    return this.apiConnect.request('GET','usuario/listar');
+  }
+
+
 }

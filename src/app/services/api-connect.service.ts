@@ -13,30 +13,22 @@ export class ApiConnectService {
   constructor(private http: HttpClient) { }
 
   requestGet(endpoint: string): Observable<any>{
-
     console.log('Apiconect - requestGet endpoint: '+endpoint);
-    let httpOptions = {
-
-    }
-
-    return this.http.get<any>(endpoint, httpOptions );
-    
+    let httpOptions = {}
+    return this.http.get<any>(endpoint, httpOptions );    
   }
 
   requestHttp(endpoint: string, body?: null | any) {
-
     let httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json'
         })
     }
-    
     return this.http.post(endpoint, body, httpOptions ).pipe(
         map(res => {
             return res;
         }),
         catchError(err => {
-            
             return (err.error);
         })
     );
@@ -44,10 +36,19 @@ export class ApiConnectService {
 
 public request (httpMetodo:string, metodo: string,  body?: null | any): Observable<any>{
     let endpoint;
-    endpoint = environment.APIEndpoint+metodo;
+    if(environment.production){
+        endpoint = environment.APIEndpoint+metodo;
+    }else{
+        endpoint = environment.APIEndpointProxy+metodo;
+    }
     console.log('Apiconect - request endpoint: '+endpoint);
-    console.log('Apiconect - request httpMetodo: '+httpMetodo);
-    return this.requestGet(endpoint);
+
+    if(httpMetodo == 'GET'){
+        return this.requestGet(endpoint);
+    }else{
+        return this.requestHttp(endpoint, body);
+    }
+    
 
 }
 }
